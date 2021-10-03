@@ -13,4 +13,7 @@ router.route("/:movieId")
 router.route("/:movieId/theaters")
     .get(controller.readTheater)
 
+router.route("/:movieId/reviews")
+    .get(controller.readReview)
+
 module.exports = router

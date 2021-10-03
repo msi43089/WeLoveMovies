@@ -28,9 +28,16 @@ async function readTheater(req, res, next){
     res.json({ data })
 }
 
+async function readReview(req,res,next){
+    const movieId = Number(req.params.movieId)
+    const data = await moviesService.movieReview(movieId)
+    res.json({ data })
+}
+
 module.exports = {
     list,
     read: [movieExists, read],
-    readTheater
+    readTheater,
+    readReview
 }
 

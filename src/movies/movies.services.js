@@ -1,7 +1,8 @@
 const { orderBy, queryBuilder } = require("../db/connection");
 const knex = require("../db/connection")
+const mapProperties = require("../utils/map-properties")
 
-
+//adjust is showing = true to show only movie columns
 //showing in theaters regardless of the value of the query parameter object
 function list(isShowing) {
     return knex("movies as m")
@@ -10,9 +11,9 @@ function list(isShowing) {
             if(isShowing) {
                 queryBuilder
                     .join("movies_theaters as mt", "m.movie_id", "mt.movie_id")
-                    .select("m.*", "mt.*")
+                    .select("m.*")
                     .where({"mt.is_showing": true})
-                    .distinct()
+                    .distinct("m.movie_id")
                     .orderBy("m.movie_id")
             }
     })
@@ -41,12 +42,23 @@ function movieTheater(movieId) {
 }
 
 
+//need to update to add nested critics object
+function movieReview(movieId){
+    return knex("movies as m")
+        .join("reviews as r", "r.movie_id", "m.movie_id")
+        .join("critics as c", "c.critic_id", "r.critic_id")
+        .select("r.*")
+        .where({"m.movie_id": movieId})
+}
+
+
 
  
 
 module.exports = {
     list,
     read,
-    movieTheater
+    movieTheater,
+    movieReview
 
 }
