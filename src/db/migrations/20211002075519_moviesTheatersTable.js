@@ -14,6 +14,7 @@ exports.up = function(knex) {
           .inTable("theaters")
           .onDelete("CASCADE"); //if theater is deleted all rows are deleted from mv table??
         table.boolean("is_showing");
+        table.timestamps(true, true)
       })
 };
 
