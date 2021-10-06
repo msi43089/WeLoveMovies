@@ -11,21 +11,21 @@ async function reviewExists(req, res, next){
     }
 }
 
+
 async function destroy(req, res, next){
     const { review } = res.locals
     await reviewService.deleteReview(review.review_id)
     res.sendStatus(204)
 }
 
-async function update(req, res, next){
-    const updatedReview = { 
-        ...req.body,
-        review_id: res.locals.review.review_id
-    }
-    const data = await reviewService.update(updatedReview)
-    res.json({ data })
-}
-
+async function update(req, res) {
+    const updatedReview = { ...res.locals.review, ...req.body.data };
+    await reviewService.update(updatedReview);
+    const returnData = await reviewService.getReviewWithCritic(
+      res.locals.review.review_id
+    );
+    res.json({ data: returnData });
+  }
 module.exports = {
     delete: [reviewExists, destroy],
     update: [reviewExists, update]
