@@ -19,7 +19,7 @@ async function destroy(req, res, next){
 
 async function update(req, res, next){
     const updatedReview = { 
-        ...res.locals.review,
+        ...req.body,
         review_id: res.locals.review.review_id
     }
     const data = await reviewService.update(updatedReview)
