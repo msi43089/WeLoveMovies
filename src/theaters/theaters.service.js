@@ -1,5 +1,5 @@
-const knex = require("../db/connection")
-const reduceProperties = require("../utils/reduce-properties")
+const knex = require("../db/connection");
+const reduceProperties = require("../utils/reduce-properties");
 
 
 const reduceMovies = reduceProperties("theater_id", {
@@ -17,9 +17,9 @@ function list(){
         .join("movies_theaters as mt", "mt.theater_id", "t.theater_id")
         .join("movies as m", "m.movie_id", "mt.movie_id")
         .select("*")
-        .then(reduceMovies)
+        .then(reduceMovies);
 }
 
 module.exports = {
     list
-}
+};
