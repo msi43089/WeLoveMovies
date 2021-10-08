@@ -1,5 +1,3 @@
-const { text } = require("express");
-const { orderBy, queryBuilder } = require("../db/connection");
 const knex = require("../db/connection");
 const mapProperties = require("../utils/map-properties");
 
@@ -15,7 +13,7 @@ function list(isShowing) {
     return knex("movies as m")
         .select("m.*")
         .modify((queryBuilder) => {
-            if(isShowing) {
+            if(isShowing === "true") {
                 queryBuilder
                     .join("movies_theaters as mt", "m.movie_id", "mt.movie_id")
                     .select("m.*")
